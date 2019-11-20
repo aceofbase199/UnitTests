@@ -1,0 +1,32 @@
+namespace TestProject2
+{
+    using System;
+    using Moq;
+    using NUnit.Framework;
+    using TestProject2.BL;
+
+    class UserRepositoryTest
+    {
+        [Test]
+        public void GetUserById()
+        {
+            var mock = new Mock<IUserRepository>();
+
+            mock.Setup(x => x.GetUserInfo(It.IsAny<int>())).Returns(new User());
+
+            IUserRepository userRepository = mock.Object;
+
+            User expectedUser = userRepository.GetUserInfo(1);
+
+            Assert.NotNull(expectedUser);
+        }
+
+        [Test]
+        public void ThrowsWhenUserNotExist()
+        {
+            IUserRepository userRepository = new UserRepository();
+
+            Assert.Throws<NullReferenceException>(() => userRepository.GetUserInfo(-1));
+        }
+    }
+}
