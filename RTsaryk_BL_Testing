@@ -1,0 +1,36 @@
+using System;
+using NUnit.Framework;
+using Moq;
+
+namespace TestProject2.BL
+{
+    [TestFixture]
+    class BLLogicTest
+    {
+        [Test]
+        public void GetUserInfoById()
+        {
+            //Arrange
+            var mock = new Mock<IUserRepository>();
+
+            //Inject mock object
+            mock.Setup(x => x.GetUserInfo(It.IsAny<int>())).Returns(new User());
+
+            //Act
+            var actualUser = mock.Object.GetUserInfo(2);
+
+            //Assert
+            Assert.NotNull(actualUser);
+        }
+
+        [Test]
+        public void ThrowsExceptionWhenUserDoesntExist()
+        {
+            var repo = new UserRepository();
+
+            void testDelegate() => repo.GetUserInfo(-25);
+
+            Assert.Throws<NullReferenceException>(testDelegate);
+        }
+    }
+}
