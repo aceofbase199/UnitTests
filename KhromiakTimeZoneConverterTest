@@ -1,0 +1,30 @@
+using System;
+using NUnit.Framework;
+
+namespace Tests
+{
+    public class TimeZoneConverterTest
+    {
+        [Test]
+        public void ConvertToEstTest()
+        {
+            DateTime dataTime = new DateTime(2008, 5, 1, 8, 30, 52);
+            DateTime expectedDataTime = new DateTime(2008, 5, 1, 1, 30, 52);
+
+            dataTime = TimeZoneConverter.ConvertToEst(dataTime);
+
+            Assert.AreEqual(expectedDataTime, dataTime);
+        }
+
+        [Test]
+        public void ConvertToUtcTest()
+        {
+            DateTime dataTime = new DateTime(2008, 5, 1, 8, 30, 52);
+            DateTime expectedDataTime = new DateTime(2008, 5, 1, 6, 30, 52);
+
+            dataTime = TimeZoneConverter.ConvertToUtc(dataTime);
+
+            Assert.AreEqual(expectedDataTime, dataTime);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+using NUnit.Framework;
+using System;
+using TestProject1.TimeConverter;
+
+namespace TestProject1
+{
+    [TestFixture]
+    public class TimeConverterTest
+    {
+        [Test]
+        public void Check_Convert_To_Est()
+        {
+            //Arrange
+            var date = DateTime.Now;
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+
+            //Act
+            var expectedEst = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.Local, timeZone);
+
+            //Assert
+            Assert.AreEqual(expectedEst, TimeZoneConverter.ConvertToEst(date));
+        }
+
+        [Test]
+        public void Check_Convert_To_Utc()
+        {
+            //Arrange
+            var date = DateTime.Now;
+
+            //Act
+            var expectedEst = TimeZoneInfo.ConvertTimeToUtc(date);
+
+            //Assert
+            Assert.AreEqual(expectedEst, TimeZoneConverter.ConvertToUtc(date));
+        }
+    }
+}
