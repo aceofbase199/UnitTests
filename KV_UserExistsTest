@@ -1,0 +1,27 @@
+using System;
+using NUnit.Framework;
+using TestProject2.BL;
+using TestProject2.Mock;
+
+namespace TestProject2
+{
+    [TestFixture]
+    public class TestUserExists
+    {
+        [Test]
+        public void UserExistsTest()
+        {
+            var userInfo = new MockUserRepository().GetUserInfo(6);
+
+            Assert.NotNull(userInfo);
+        }
+
+        [Test]
+        public void UserNotExistsThrowsException()
+        {
+            var userRepository = new UserRepository();
+
+            Assert.Throws<NullReferenceException>(() => userRepository.GetUserInfo(7));
+        }
+    }
+}
