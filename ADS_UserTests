@@ -1,0 +1,33 @@
+using System;
+using NUnit.Framework;
+using TestProject2.BL;
+using Moq;
+
+namespace TestProject2
+{
+    // Чи такий юзер існує, шота замокати.
+    // анріал айдішка чи строває ексепшн.
+    [TestFixture]
+    public class UserTest
+    {
+        [Test]
+        public void UserExistsTest()
+        {
+            var mock = new Mock<IUserRepository>();
+
+            mock.Setup(x => x.GetUserInfo(It.IsAny<int>())).Returns(new User());
+
+            var testUser = mock.Object.GetUserInfo(5);
+
+            Assert.NotNull(testUser);
+        }
+
+        [Test]
+        public void UserNotExistExceptionTest()
+        {
+            var userRepository = new UserRepository();
+
+            Assert.Throws<NullReferenceException>(() => userRepository.GetUserInfo(-2));
+        }
+    }
+}
