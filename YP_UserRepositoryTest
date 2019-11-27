@@ -1,0 +1,32 @@
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TestProject2.BL;
+
+namespace TestProject2
+{
+    [TestFixture]
+    class UserRepositoryTest
+    {
+        [Test]
+        public void Check_IfUserExists()
+        {
+            var mock = new Mock<IUserRepository>();
+
+            mock.Setup(repo => repo.GetUserInfo(It.IsAny<int>())).Returns(new User());
+
+            var testUser = mock.Object.GetUserInfo(4);
+
+            Assert.NotNull(testUser);
+        }
+
+        [Test]
+        public void Check_IfExceptionIsThrown()
+        {
+            var userRepository = new UserRepository();
+            Assert.Throws<NullReferenceException>(() => userRepository.GetUserInfo(8));
+        }
+    }
+}
