@@ -1,0 +1,19 @@
+[TestFixture]
+class UserRepositoryTest
+{
+     [Test]
+     public void TestReturnGetUserInfo()
+     {
+         var mock = new Mock<IUserRepository>();
+         mock.Setup(ur => ur.GetUserInfo(It.IsAny<int>())).Returns(new User());
+         var userRepository = mock.Object;
+         Assert.IsNotNull(userRepository.GetUserInfo(1));
+     }
+
+     [Test]
+     public void ThrowsWhenUserNotExist()
+     {
+         var repo = new UserRepository();
+         Assert.Throws<NullReferenceException>(() => repo.GetUserInfo(-100));
+     }
+}
